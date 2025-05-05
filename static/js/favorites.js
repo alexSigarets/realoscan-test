@@ -58,7 +58,7 @@ export async function fetchFavoriteIds() {
     if (!token) return [];
 
     try {
-        const res = await fetch("http://192.168.1.202:8000/favorite/ids", {
+        const res = await fetch("favorite/ids", {
             headers: {
                 "Authorization": `Bearer ${token}`
             }
