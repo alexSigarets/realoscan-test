@@ -1,0 +1,78 @@
+<!-- public/favorites.html -->
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>RealoScan - Moje oblíbené</title>
+    <link rel="stylesheet" href="/static/style.css">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="static/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="static/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="static/favicon/favicon-16x16.png">
+    <link rel="manifest" href="static/favicon/site.webmanifest">
+</head>
+<body>
+    <div id="toast-container"></div>
+
+    <header>
+        <div class="container header-container">
+            <div class="logo-container">
+                <a href="/">
+                    <img src="/static/RealoScan - logo_up.png" alt="RealoScan logo" class="logo-img">
+                </a>
+            </div>
+            <nav>
+                <a href="/" class="admin-btn">Zpět do katalogu</a>
+            </nav>
+        </div>
+    </header>
+
+    <div id="content" class="container">
+
+        <h2 class="favorites-heading">Moje oblíbené nemovitosti:</h2>
+
+        <div class="apartment-counter-box">
+            <span id="apartment-count" class="apartment-count">Nalezeno: 0 nemovitostí</span>
+        </div>
+
+        <div id="no-results" class="no-results hidden">V oblíbených nemáte žádné položky.</div>
+
+        
+
+        <main class="properties" id="properties">
+            <!-- Карточки избранных квартир появятся здесь -->
+            <!-- <div class="property-card">
+                <img src="/static/images/sample.jpg" alt="Byt v centru Prahy">
+                <div class="info">
+                    <div>
+                        <h3>Moderní byt 2+kk v centru Prahy</h3>
+                        <p><strong>Cena:</strong> 18 000 Kč/měsíc</p>
+                        <p><strong>Lokalita:</strong> Praha 1</p>
+                        <p>Nově zrekonstruovaný byt v blízkosti nákupních center a MHD.</p>
+                    </div>
+                    <a href="#" class="detail-btn">Více informací</a>
+                </div>
+            </div> -->
+        </main>
+    </div>
+
+    <div id="preloader" class="preloader hidden">
+        <div class="spinner"></div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 RealoScan. Všechna práva vyhrazena.</p>
+        </div>
+    </footer>
+
+    <script type="module" src="/static/js/main_favorite.js"></script>
+    <script>
+        const token = localStorage.getItem('token');
+        if (!token) {
+            window.location.href = '/login'; // если нет токена, перенаправляем
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>RealoScan - Reality</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css" />
+
+    <link rel="apple-touch-icon" sizes="180x180" href="static/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="static/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="static/favicon/favicon-16x16.png">
+    <link rel="manifest" href="static/favicon/site.webmanifest">
+</head>
+<body>
+    <div id="toast-container"></div>
+<header>
+    <div class="container header-container">
+        <div class="logo-container">
+            <a href="/" >
+                <img src="/static/RealoScan - logo_up.png" alt="RealoScan logo" class="logo-img">
+            </a>    
+            
+        </div>
+        <nav>
+            <a href="/favorites" class="admin-btn">Moje oblíbené</a>
+            <button class="admin-btn" id="adminRegisterBtn">Admin registrace</button>
+        </nav>
+    </div>
+</header>
+
+<div id="content" class="container">
+    <section class="filters-bar">
+        <div class="filters-grid">
+            <!-- <div class="filter-group">
+                <label for="stari">Stáří</label>
+                <select id="stari">
+                    <option value="">Nezáleží</option>
+                    <option value="1">1 den</option>
+                    <option value="3">3 dny</option>
+                    <option value="7">7 dní</option>
+                    <option value="14">14 dní</option>
+                    <option value="30">30 dní</option>
+                </select>
+            </div> -->
+            <div class="filter-group">
+                <label for="aktivita">Aktivita</label>
+                <select id="aktivita">
+                    <option value="0">Nezáleží</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label for="druh">Druh reality</label>
+                <select id="druh">
+                    <option value="0">Nezáleží</option>
+                </select>
+            </div>
+            
+    
+            <div class="filter-group">
+                <label for="kraj">Kraj</label>
+                <select id="kraj">
+                    <option value="0">Nezáleží</option>
+                    
+                </select>
+            </div>
+            <div class="filter-group">
+                <label for="okres">Okres</label>
+                <select id="okres">
+                    <option value="">Nejprve vyberte "Středočeský kraj"</option>
+                </select>
+            </div>
+            
+            
+            
+        </div>
+    
+        <div class="filters-bottom">
+            <div id="praha-checkboxes" class="filter-checkbox-group" style="opacity: 0; pointer-events: none;">
+                <label>Část Prahy</label>
+                <div class="checkboxes">
+                    <label><input type="checkbox" value="Praha 1" data-pragueId="10"> Praha 1</label>
+                    <label><input type="checkbox" value="Praha 2" data-pragueId="20"> Praha 2</label>
+                    <label><input type="checkbox" value="Praha 3" data-pragueId="30"> Praha 3</label>
+                    <label><input type="checkbox" value="Praha 4" data-pragueId="40"> Praha 4</label>
+                    <label><input type="checkbox" value="Praha 5" data-pragueId="50"> Praha 5</label>
+                    <label><input type="checkbox" value="Praha 6" data-pragueId="60"> Praha 6</label>
+                    <label><input type="checkbox" value="Praha 7" data-pragueId="70"> Praha 7</label>
+                    <label><input type="checkbox" value="Praha 8" data-pragueId="80"> Praha 8</label>
+                    <label><input type="checkbox" value="Praha 9" data-pragueId="90"> Praha 9</label>
+                    <label><input type="checkbox" value="Praha 10" data-pragueId="100"> Praha 10</label>
+                    <label><input type="checkbox" value="Neurčeno" data-pragueId="900"> Neurčeno</label>
+                </div>
+            </div>
+            <div class="filter-button-group">
+                <button id="filter-btn">Filtrovat</button>
+                <button id="reset-btn">Reset</button>
+            </div>
+        </div>
+    </section>
+
+    
+
+
+    <div class="apartment-counter-box">
+        <span id="apartment-count" class="apartment-count">Nalezeno: 0 nemovitostí</span>
+    </div>
+
+    <div id="no-results" class="no-results hidden">Nenalezeny žádné nemovitosti podle zvolených filtrů.</div>
+
+    
+    <main class="properties" id="properties">
+
+        <!-- Здесь карточки квартир -->
+        
+        <!-- <div class="property-card">
+            <img src="/static/images/sample.jpg" alt="Byt v centru Prahy">
+            <div class="info">
+                <div>
+                    <h3>Moderní byt 2+kk v centru Prahy</h3>
+                    <p><strong>Cena:</strong> 18 000 Kč/měsíc</p>
+                    <p><strong>Lokalita:</strong> Praha 1</p>
+                    <p>Nově zrekonstruovaný byt v blízkosti nákupních center a MHD.</p>
+                </div>
+                <a href="#" class="detail-btn">Více informací</a>
+            </div>
+        </div> -->
+    </main>
+</div>
+
+<div id="preloader" class="preloader hidden">
+    <div class="spinner"></div>
+</div>
+
+<footer>
+    <div class="container">
+        <p>&copy; 2025 RealoScan. Všechna práva vyhrazena.</p>
+    </div>
+</footer>
+
+<!-- <script type="module" src="/static/app.js"></script> -->
+<script type="module" src="/static/js/main.js"></script>
+<script>
+    // Проверяем наличие токена
+    const token = localStorage.getItem('token');
+    if (!token) {
+        window.location.href = '/login'; // Если нет токена - отправляем на логин
+    }
+
+    // Тут ты можешь делать запросы к серверу, передавая токен в заголовках
+</script>
+</body>
+</html>

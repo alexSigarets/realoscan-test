@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Přihlášení - RealoScan</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <style>
+        body {
+            margin: 0;
+            background-color: #eef4f9;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }       
+
+        .login-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center; /* добавляем! */
+            width: 100%;
+            max-width: 400px;
+            padding: 20px;
+        }
+
+        .logo-block img {
+            width: 280px;
+            max-width: 90%;
+        }
+
+        .login-container {
+            background: #fff;
+            padding: 40px 30px;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        .login-container h2 {
+            margin-bottom: 24px;
+            font-size: 28px;
+            color: #1976d2;
+        }
+
+        .login-container input {
+            width: 100%;
+            padding: 14px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 16px;
+            box-sizing: border-box; /* добавляем обязательно! */
+        }
+
+        .login-container button {
+            width: 100%;
+            background-color: #1976d2;
+            color: white;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .login-container button:hover {
+            background-color: #1565c0;
+        }
+
+        .error-message {
+            color: red;
+            margin-bottom: 20px;
+            display: none;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="login-wrapper">
+        <!-- 🔷 Блок логотипа -->
+        <!-- <div class="logo-block">
+            <img src="/static/RealoScan - logo.png" alt="RealoScan Logo">
+        </div> -->
+    
+        <!-- 🔷 Блок формы -->
+        <div class="login-container">
+            <h2>Přihlášení</h2>
+            <div id="error" class="error-message"></div>
+            <form id="loginForm">
+                <input type="text" id="username" placeholder="Uživatelské jméno" required>
+                <input type="password" id="password" placeholder="Heslo" required>
+                <button type="submit">Přihlásit se</button>
+            </form>
+        </div>
+    </div>
+
+<script>
+    document.getElementById('loginForm').addEventListener('submit', async function(event) {
+        event.preventDefault();
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+        const errorDiv = document.getElementById('error');
+
+        try {
+            const response = await fetch('/login/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ username, password })
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                localStorage.setItem('token', data.token);
+                localStorage.setItem('role', data.role); 
+                document.cookie = `token=${data.token}; path=/`;  // ← добавляем cookie
+                window.location.href = '/';
+            } else {
+                const errorData = await response.json();
+                errorDiv.textContent = errorData.detail || "Chyba přihlášení.";
+                errorDiv.style.display = 'block';
+            }
+        } catch (error) {
+            errorDiv.textContent = "Chyba serveru. Zkuste to znovu později.";
+            errorDiv.style.display = 'block';
+        }
+    });
+</script>
+
+</body>
+</html>
