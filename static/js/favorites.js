@@ -20,7 +20,7 @@ export function handleFavoriteButton(card, apartmentId, isFavorited = false) {
         if (!token) return showToast("Nejste přihlášeni", "error");
 
         try {
-            const res = await fetch("http://192.168.1.202:8000/favorite", {
+            const res = await fetch("favorite/", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
